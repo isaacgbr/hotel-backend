@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Hospede {
+  id         Int        @id @default(autoincrement())
+  nome       String
+  cpf        String
+  telefone   String
+
+  reservas   Reserva[]
+}
+
+model Quarto {
+  id         Int        @id @default(autoincrement())
+  numero     String
+  tipo        String
+  status      String
+
+  reservas    Reserva[]
+}
+
+model Reserva {
+  id          Int       @id @default(autoincrement())
+  dataEntrada DateTime
+  dataSaida   DateTime
+
+  hospedeId   Int
+  quartoId    Int
+
+  hospede     Hospede   @relation(fields: [hospedeId], references: [id])
+  quarto      Quarto    @relation(fields: [quartoId], references: [id])
+
+  pagamentos  Pagamento[]
+}
+
+model Pagamento {
+  id               Int       @id @default(autoincrement())
+  valor             Float
+  statusPagamento   String
+
+  reservaId         Int
+  reserva           Reserva @relation(fields: [reservaId], references: [id])
+}
