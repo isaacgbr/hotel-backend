@@ -35,6 +35,22 @@ Criar uma API backend para controlar:
 ✔ Models criados  
 ✔ Branches criadas  
 
+### 13/05/2026
+✔ Estrutura src criada  
+✔ Adicionado diagrama draw.io  
+✔ app.js criado  
+✔ Github organizado   
+
+## Próximos passos
+
+- Criar CRUD de Hospede
+- Criar CRUD de Quarto
+- Criar CRUD de Reserva
+- Criar CRUD de Pagamento
+- Testar no Postman
+- Integrar tudo
+- Preparar apresentação
+
 ---
 
 # 📌 Funcionalidades
@@ -57,17 +73,21 @@ Criar uma API backend para controlar:
 
 ```bash
 hotel-backend/
+
+├── docs/
+│   └── diagrama-hotel.drawio.png
 │
 ├── prisma/
-│   ├── schema.prisma
-│   └── migrations/
+│   ├── migrations/
+│   ├── dev.db
+│   └── schema.prisma
 │
 ├── src/
-│   ├── routes/
-│   ├── controllers/
-│   ├── services/
-│   ├── repositories/
 │   ├── container/
+│   ├── controllers/
+│   ├── repositories/
+│   ├── routes/
+│   ├── services/
 │   └── app.js
 │
 ├── .env
@@ -80,20 +100,20 @@ hotel-backend/
 
 # 👥 Divisão da Equipe
 
-### Pessoa 1 → Banco
+### Vitorio → Banco
 - revisar schema.prisma
 
-### Pessoa 2 → Hóspede + Quarto
+### João Henrique → Hóspede + Quarto
 - CRUD completo
 
-### Pessoa 3 → Reserva
+### Leonardo → Reserva
 - CRUD completo
 - regra de disponibilidade
 
-### Pessoa 4 → Pagamento
+### Josiel → Pagamento
 - CRUD completo
 
-### Pessoa 5 → Integração
+### Isaac → Integração
 - testes
 - integração
 - apresentação
@@ -172,12 +192,3 @@ repositories
 
 Explique de forma simples para iniciante e me mostre quais arquivos criar.
 ```
-
----
-
-# 🎯 Próximos passos
-
-- Finalizar CRUDs  
-- Testar rotas  
-- Integrar sistema  
-- Revisar apresentação  
