@@ -19,9 +19,9 @@
   },
   "homepage": "https://github.com/isaacgbr/hotel-backend#readme",
   "dependencies": {
-    "@prisma/client": "^5.22.0",
+    "@prisma/client": "^6.19.3",
     "express": "^5.2.1",
-    "prisma": "^5.22.0",
+    "prisma": "^6.19.3",
     "reflect-metadata": "^0.2.2",
     "sqlite3": "^6.0.1",
     "tsyringe": "^4.10.0"

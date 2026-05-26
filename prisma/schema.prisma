@@ -10,19 +10,19 @@ datasource db {
 model Hospede {
   id         Int        @id @default(autoincrement())
   nome       String
-  cpf        String
+  cpf        String     @unique
   telefone   String
 
   reservas   Reserva[]
 }
 
 model Quarto {
-  id         Int        @id @default(autoincrement())
-  numero     String
-  tipo        String
-  status      String
+  id        Int        @id @default(autoincrement())
+  numero    String
+  tipo      String
+  status    String
 
-  reservas    Reserva[]
+  reservas  Reserva[]
 }
 
 model Reserva {
@@ -40,10 +40,10 @@ model Reserva {
 }
 
 model Pagamento {
-  id               Int       @id @default(autoincrement())
-  valor             Float
-  statusPagamento   String
+  id                 Int       @id @default(autoincrement())
+  valor              Float
+  statusPagamento    String
 
-  reservaId         Int
-  reserva           Reserva @relation(fields: [reservaId], references: [id])
+  reservaId          Int
+  reserva            Reserva @relation(fields: [reservaId], references: [id])
 }

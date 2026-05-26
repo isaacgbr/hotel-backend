@@ -1,4 +1,4 @@
-const ReservaService = require('../services/reservaService');
+const ReservaService = require('../services/reserva.service');
 
 module.exports = {
 
