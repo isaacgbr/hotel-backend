@@ -4,8 +4,10 @@ const app = express();
 app.use(express.json());
 
 const hospedeRoutes = require('./routes/hospede.routes');
+const reservaRoutes = require('./routes/reserva.routes');
 
 app.use('/hospedes', hospedeRoutes);
+app.use('/reservas', reservaRoutes);
 
 // Health check
 app.get('/', (req, res) => {

@@ -2,32 +2,42 @@ const ReservaService = require('../services/reserva.service');
 
 module.exports = {
 
-    create(req, res) {
+    async criar(req, res) {
         try {
-            const reserva = ReservaService.create(req.body);
+            const reserva = await ReservaService.criarReserva(req.body);
             return res.status(201).json(reserva);
         } catch (error) {
             return res.status(400).json({ erro: error.message });
         }
     },
 
-    getAll(req, res) {
-        const reservas = ReservaService.getAll();
+    async listar(req, res) {
+        const reservas = await ReservaService.listarReservas();
         return res.json(reservas);
     },
 
-    update(req, res) {
+    async atualizar(req, res) {
         try {
-            const reserva = ReservaService.update(req.params.id, req.body);
+            const reserva = await ReservaService.atualizarReserva(req.params.id, req.body);
+
+            if (!reserva) {
+                return res.status(404).json({ erro: 'Não encontrada' });
+            }
+
             return res.json(reserva);
         } catch (error) {
             return res.status(400).json({ erro: error.message });
         }
     },
 
-    delete(req, res) {
+    async deletar(req, res) {
         try {
-            ReservaService.delete(req.params.id);
+            const resultado = await ReservaService.deletarReserva(req.params.id);
+
+            if (!resultado) {
+                return res.status(404).json({ erro: 'Não encontrada' });
+            }
+
             return res.json({ mensagem: 'Reserva deletada com sucesso' });
         } catch (error) {
             return res.status(400).json({ erro: error.message });

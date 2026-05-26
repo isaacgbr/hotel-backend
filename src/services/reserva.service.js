@@ -1,68 +1,70 @@
-let reservas = [];
-let idAtual = 1;
+const reservaRepository = require('../repositories/reserva.repository');
+
+// CREATE
+const criarReserva = async (dados) => {
+    const { dataEntrada, dataSaida, hospedeId, quartoId } = dados;
+
+    if (!dataEntrada || !dataSaida || !hospedeId || !quartoId) {
+        throw new Error('Dados obrigatórios faltando');
+    }
+
+    const conflito = await reservaRepository.verificarConflito(
+        quartoId,
+        dataEntrada,
+        dataSaida
+    );
+
+    if (conflito) {
+        throw new Error('Quarto já reservado nesse período');
+    }
+
+    return await reservaRepository.criarReserva(dados);
+};
+
+// READ
+const listarReservas = async () => {
+    return await reservaRepository.listarReservas();
+};
+
+// READ BY ID
+const buscarReservaPorId = async (id) => {
+    return await reservaRepository.buscarPorId(id);
+};
+
+// UPDATE
+const atualizarReserva = async (id, dados) => {
+    const existe = await reservaRepository.buscarPorId(id);
+    if (!existe) return null;
+
+    const { dataEntrada, dataSaida, quartoId } = dados;
+
+    if (quartoId || dataEntrada || dataSaida) {
+        const conflito = await reservaRepository.verificarConflito(
+            quartoId || existe.quartoId,
+            dataEntrada || existe.dataEntrada,
+            dataSaida || existe.dataSaida
+        );
+
+        if (conflito) {
+            throw new Error('Quarto já reservado nesse período');
+        }
+    }
+
+    return await reservaRepository.atualizarReserva(id, dados);
+};
+
+// DELETE
+const deletarReserva = async (id) => {
+    const existe = await reservaRepository.buscarPorId(id);
+    if (!existe) return null;
+
+    return await reservaRepository.deletarReserva(id);
+};
 
 module.exports = {
-
-    create({ nome, quarto, data }) {
-        if (!nome || !quarto || !data) {
-            throw new Error('Nome, quarto e data são obrigatórios');
-        }
-
-        const conflito = reservas.find(r =>
-            r.quarto === quarto &&
-            r.data === data
-        );
-
-        if (conflito) {
-            throw new Error('Quarto já reservado nessa data');
-        }
-
-        const novaReserva = {
-            id: idAtual++,
-            nome,
-            quarto,
-            data
-        };
-
-        reservas.push(novaReserva);
-        return novaReserva;
-    },
-
-    getAll() {
-        return reservas;
-    },
-
-    update(id, { nome, quarto, data }) {
-        const reserva = reservas.find(r => r.id == id);
-
-        if (!reserva) {
-            throw new Error('Reserva não encontrada');
-        }
-
-        const conflito = reservas.find(r =>
-            r.id != id &&
-            r.quarto === (quarto || reserva.quarto) &&
-            r.data === (data || reserva.data)
-        );
-
-        if (conflito) {
-            throw new Error('Quarto já reservado nessa data');
-        }
-
-        reserva.nome = nome || reserva.nome;
-        reserva.quarto = quarto || reserva.quarto;
-        reserva.data = data || reserva.data;
-
-        return reserva;
-    },
-
-    delete(id) {
-        const existe = reservas.some(r => r.id == id);
-
-        if (!existe) {
-            throw new Error('Reserva não encontrada');
-        }
-
-        reservas = reservas.filter(r => r.id != id);
-    }
+    criarReserva,
+    listarReservas,
+    buscarReservaPorId,
+    atualizarReserva,
+    deletarReserva
 };
