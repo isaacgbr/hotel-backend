@@ -8,17 +8,33 @@ const criarReserva = async (dados) => {
         throw new Error('Dados obrigatórios faltando');
     }
 
+    const entrada = new Date(dataEntrada);
+    const saida = new Date(dataSaida);
+
+    if (isNaN(entrada.getTime()) || isNaN(saida.getTime())) {
+        throw new Error('Datas inválidas');
+    }
+
+    if (entrada >= saida) {
+        throw new Error('Data de entrada deve ser menor que a de saída');
+    }
+
     const conflito = await reservaRepository.verificarConflito(
         quartoId,
-        dataEntrada,
-        dataSaida
+        entrada,
+        saida
     );
 
     if (conflito) {
         throw new Error('Quarto já reservado nesse período');
     }
 
-    return await reservaRepository.criarReserva(dados);
+    return await reservaRepository.criarReserva({
+        hospedeId,
+        quartoId,
+        dataEntrada: entrada,
+        dataSaida: saida
+    });
 };
 
 // READ
@@ -36,21 +52,38 @@ const atualizarReserva = async (id, dados) => {
     const existe = await reservaRepository.buscarPorId(id);
     if (!existe) return null;
 
-    const { dataEntrada, dataSaida, quartoId } = dados;
+    const entrada = dados.dataEntrada
+        ? new Date(dados.dataEntrada)
+        : existe.dataEntrada;
 
-    if (quartoId || dataEntrada || dataSaida) {
-        const conflito = await reservaRepository.verificarConflito(
-            quartoId || existe.quartoId,
-            dataEntrada || existe.dataEntrada,
-            dataSaida || existe.dataSaida
-        );
+    const saida = dados.dataSaida
+        ? new Date(dados.dataSaida)
+        : existe.dataSaida;
 
-        if (conflito) {
-            throw new Error('Quarto já reservado nesse período');
-        }
+    if (isNaN(entrada.getTime()) || isNaN(saida.getTime())) {
+        throw new Error('Datas inválidas');
     }
 
-    return await reservaRepository.atualizarReserva(id, dados);
+    if (entrada >= saida) {
+        throw new Error('Data de entrada deve ser menor que a de saída');
+    }
+
+    const conflito = await reservaRepository.verificarConflito(
+        dados.quartoId || existe.quartoId,
+        entrada,
+        saida,
+        id
+    );
+
+    if (conflito) {
+        throw new Error('Quarto já reservado nesse período');
+    }
+
+    return await reservaRepository.atualizarReserva(id, {
+        ...dados,
+        dataEntrada: entrada,
+        dataSaida: saida
+    });
 };
 
 // DELETE
@@ -58,7 +91,8 @@ const deletarReserva = async (id) => {
     const existe = await reservaRepository.buscarPorId(id);
     if (!existe) return null;
 
-    return await reservaRepository.deletarReserva(id);
+    await reservaRepository.deletarReserva(id);
+    return true;
 };
 
 module.exports = {

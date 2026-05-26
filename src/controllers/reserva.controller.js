@@ -16,6 +16,20 @@ module.exports = {
         return res.json(reservas);
     },
 
+    async buscar(req, res) {
+        try {
+            const reserva = await ReservaService.buscarReservaPorId(req.params.id);
+
+            if (!reserva) {
+                return res.status(404).json({ erro: 'Não encontrada' });
+            }
+
+            return res.json(reserva);
+        } catch (error) {
+            return res.status(400).json({ erro: error.message });
+        }
+    },
+
     async atualizar(req, res) {
         try {
             const reserva = await ReservaService.atualizarReserva(req.params.id, req.body);

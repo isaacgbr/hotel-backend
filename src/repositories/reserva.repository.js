@@ -43,11 +43,12 @@ const deletarReserva = (id) => {
     });
 };
 
-// CHECK CONFLICT (REGRA DE NEGÓCIO IMPORTANTE)
-const verificarConflito = (quartoId, dataEntrada, dataSaida) => {
+// CHECK CONFLICT (CORRIGIDO)
+const verificarConflito = (quartoId, dataEntrada, dataSaida, reservaId = null) => {
     return prisma.reserva.findFirst({
         where: {
             quartoId: Number(quartoId),
+            id: reservaId ? { not: Number(reservaId) } : undefined,
             OR: [
                 {
                     dataEntrada: { lte: new Date(dataSaida) },
