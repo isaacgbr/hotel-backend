@@ -1,14 +1,21 @@
 const express = require('express');
 const router = express.Router();
 
-// GET teste
-router.get('/', (req, res) => {
-    res.json({ mensagem: 'GET funcionando!' });
-});
+const hospedeController = require('../controllers/hospede.controller');
 
-// POST teste
-router.post('/', (req, res) => {
-    res.json({ mensagem: 'POST funcionando!' });
-});
+// CREATE
+router.post('/', hospedeController.criar);
+
+// READ ALL
+router.get('/', hospedeController.listar);
+
+// READ BY ID
+router.get('/:id', hospedeController.buscarPorId);
+
+// UPDATE
+router.put('/:id', hospedeController.atualizar);
+
+// DELETE
+router.delete('/:id', hospedeController.deletar);
 
 module.exports = router;

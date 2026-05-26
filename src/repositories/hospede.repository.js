@@ -1,8 +1,6 @@
 const prisma = require('../../prisma/client');
 
-const criarHospede = (data) => {
-    return prisma.hospede.create({ data });
-};
+const criarHospede = (data) => prisma.hospede.create({ data });
 
 const listarHospedes = () => {
     return prisma.hospede.findMany();
@@ -18,7 +16,7 @@ const atualizarHospede = (id, data) => {
     return prisma.hospede.update({
         where: { id: Number(id) },
         data
-    });
+    }).catch(() => null);
 };
 
 const deletarHospede = (id) => {
@@ -27,10 +25,17 @@ const deletarHospede = (id) => {
     });
 };
 
+const buscarPorCpf = (cpf) => {
+    return prisma.hospede.findUnique({
+        where: { cpf }
+    });
+};
+
 module.exports = {
     criarHospede,
     listarHospedes,
     buscarPorId,
+    buscarPorCpf,
     atualizarHospede,
     deletarHospede
 };

@@ -7,6 +7,18 @@ const hospedeRoutes = require('./routes/hospede.routes');
 
 app.use('/hospedes', hospedeRoutes);
 
+// Health check
+app.get('/', (req, res) => {
+    res.json({ status: 'API online' });
+});
+
+// Middleware de erro global
+app.use((err, req, res, next) => {
+    res.status(500).json({
+        erro: err.message || 'Erro interno'
+    });
+});
+
 app.listen(3000, () => {
-    console.log('Servidor rodando');
+    console.log('Servidor rodando em http://localhost:3000');
 });
