@@ -1,15 +1,48 @@
-const express = require('express');
-const router = express.Router();
+const hospedeRepository = require('../repositories/hospede.repository');
 
-// TESTE GET
-router.get('/', (req, res) => {
-    res.json({ mensagem: 'GET funcionando!' });
-});
+// CREATE
+const criarHospede = async (dados) => {
 
-// TESTE POST
-router.post('/', (req, res) => {
-    res.json({ mensagem: 'POST funcionando!' });
-});
+    if (!dados.cpf) {
+        throw new Error('CPF é obrigatório');
+    }
 
-module.exports = router;
+    return await hospedeRepository.criarHospede(dados);
 
+};
+
+// READ
+const listarHospedes = async () => {
+
+    return await hospedeRepository.listarHospedes();
+
+};
+
+// READ BY ID
+const buscarHospedePorId = async (id) => {
+
+    return await hospedeRepository.buscarPorId(id);
+
+};
+
+// UPDATE
+const atualizarHospede = async (id, dados) => {
+
+    return await hospedeRepository.atualizarHospede(id, dados);
+
+};
+
+// DELETE
+const deletarHospede = async (id) => {
+
+    return await hospedeRepository.deletarHospede(id);
+
+};
+
+module.exports = {
+    criarHospede,
+    listarHospedes,
+    buscarHospedePorId,
+    atualizarHospede,
+    deletarHospede
+};

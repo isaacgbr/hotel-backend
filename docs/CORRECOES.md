@@ -154,3 +154,40 @@ Mas NÃO:
 Atualizar services para separar corretamente regras de negócio do acesso ao banco.
 
 ---
+
+# Service - Hospede
+
+## Como estava antes?
+O service estava incorreto:
+- utilizando express
+- criando rotas
+- misturando responsabilidades
+
+---
+
+## Por que estava errado?
+Service não deve criar rotas nem usar router.
+
+Isso pertence à camada routes/controller.
+
+---
+
+## O que vamos mudar?
+O service será responsável apenas por:
+- regras de negócio
+- validações
+- comunicação com repository
+
+---
+
+## O que o integrante precisa entender?
+Cada camada possui uma responsabilidade específica:
+- routes → URLs
+- controller → req/res
+- service → lógica
+- repository → banco
+
+---
+
+## O que vem depois?
+Refatorar o service para seguir arquitetura correta.
