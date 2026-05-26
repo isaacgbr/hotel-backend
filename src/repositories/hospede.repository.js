@@ -10,20 +10,20 @@ const listarHospedes = () => {
 
 const buscarPorId = (id) => {
     return prisma.hospede.findUnique({
-        where: { id }
+        where: { id: Number(id) }
     });
 };
 
 const atualizarHospede = (id, data) => {
     return prisma.hospede.update({
-        where: { id },
+        where: { id: Number(id) },
         data
     });
 };
 
 const deletarHospede = (id) => {
     return prisma.hospede.delete({
-        where: { id }
+        where: { id: Number(id) }
     });
 };
 
