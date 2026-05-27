@@ -17,12 +17,13 @@ model Hospede {
 }
 
 model Quarto {
-  id        Int        @id @default(autoincrement())
-  numero    String
-  tipo      String
-  status    String
+  id            Int       @id @default(autoincrement())
+  numero        String    @unique
+  tipo          String
+  status        String    @default("disponivel")
+  precoPorDiaria Float
 
-  reservas  Reserva[]
+  reservas      Reserva[]
 }
 
 model Reserva {

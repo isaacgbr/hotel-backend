@@ -5,9 +5,11 @@ app.use(express.json());
 
 const hospedeRoutes = require('./routes/hospede.routes');
 const reservaRoutes = require('./routes/reserva.routes');
+const quartoRoutes = require('./routes/quarto.routes');
 
 app.use('/hospedes', hospedeRoutes);
 app.use('/reservas', reservaRoutes);
+app.use('/quartos', quartoRoutes);
 
 // Health check
 app.get('/', (req, res) => {
