@@ -12,9 +12,13 @@ module.exports = {
     },
 
     async listar(req, res) {
+    try {
         const reservas = await ReservaService.listarReservas();
         return res.json(reservas);
-    },
+    } catch (error) {
+        return res.status(500).json({ erro: error.message });
+    }
+},
 
     async buscar(req, res) {
         try {

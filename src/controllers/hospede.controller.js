@@ -5,7 +5,7 @@ const criar = async (req, res) => {
         const hospede = await service.criarHospede(req.body);
         res.status(201).json(hospede);
     } catch (error) {
-        res.status(500).json({ erro: error.message });
+        res.status(400).json({ erro: error.message });
     }
 };
 

@@ -16,7 +16,7 @@ const atualizarHospede = (id, data) => {
     return prisma.hospede.update({
         where: { id: Number(id) },
         data
-    }).catch(() => null);
+    });
 };
 
 const deletarHospede = (id) => {
