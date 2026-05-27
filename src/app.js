@@ -1,2 +1,2 @@
-const pagamentosRoutes = require("./routes/pagamento.routes");
-app.use("/pagamentos", pagamentosRoutes);
+const pagamentoRoutes = require('./routes/pagamento.routes');
+app.use('/pagamentos', pagamentoRoutes);

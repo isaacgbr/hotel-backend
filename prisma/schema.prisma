@@ -42,6 +42,7 @@ model Reserva {
 model Pagamento {
   id               Int       @id @default(autoincrement())
   valor             Float
+  
   statusPagamento   String
 
   reservaId         Int
