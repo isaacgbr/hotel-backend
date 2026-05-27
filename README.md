@@ -1,6 +1,7 @@
 # 🏨 Sistema de Hotel — Backend
 
-> Projeto acadêmico de API para gerenciamento de hotel.
+> Projeto acadêmico de API REST para gerenciamento de hotel.
+> Node.js + Express + Prisma + SQLite
 
 ---
 
@@ -10,15 +11,13 @@
 ![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
-![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 
 ---
 
-# 🎯 Objetivo
+## 🎯 Objetivo
 
-Criar uma API backend para controlar:
-
+API backend para controlar:
 - Hóspedes
 - Quartos
 - Reservas
@@ -26,70 +25,45 @@ Criar uma API backend para controlar:
 
 ---
 
-# ✅ Status Atual
+## ✅ Status do Projeto
 
-### 11/05/2026
-✔ Estrutura inicial criada  
-✔ Banco configurado  
-✔ Prisma configurado  
-✔ Models criados  
-✔ Branches criadas  
-
-### 13/05/2026
-✔ Estrutura src criada  
-✔ Adicionado diagrama draw.io  
-✔ app.js criado  
-✔ Github organizado   
-
-## Próximos passos
-
-- Criar CRUD de Hospede
-- Criar CRUD de Quarto
-- Criar CRUD de Reserva
-- Criar CRUD de Pagamento
-- Testar no Postman
-- Integrar tudo
-- Preparar apresentação
+| Módulo | Status |
+|---|---|
+| CRUD de Hóspedes | ✅ Concluído |
+| CRUD de Quartos | ✅ Concluído |
+| CRUD de Reservas | ✅ Concluído |
+| CRUD de Pagamentos | ⏳ Em andamento |
+| Testes gerais | ⏳ Em andamento |
+| Apresentação | ⏳ Pendente |
 
 ---
 
-# 📌 Funcionalidades
+## 📅 Histórico
 
-✅ CRUD de hóspedes  
-
-✅ CRUD de quartos  
-
-✅ CRUD de reservas  
-
-✅ CRUD de pagamentos  
-
-✅ Verificação de disponibilidade de quartos  
-
-✅ Testes via Postman  
+| Data | Evento |
+|---|---|
+| 11/05/2026 | Estrutura inicial, banco e Prisma configurados |
+| 13/05/2026 | Estrutura src criada, app.js, diagrama adicionado |
+| 27/05/2026 | CRUD de Hóspede, Quarto e Reserva concluídos e testados |
 
 ---
 
-# 🧱 Estrutura do Projeto
+## 🧱 Estrutura do Projeto
 
 ```bash
 hotel-backend/
-
 ├── docs/
 │   └── diagrama-hotel.drawio.png
-│
 ├── prisma/
 │   ├── migrations/
 │   ├── dev.db
 │   └── schema.prisma
-│
 ├── src/
-│   ├── container/
 │   ├── controllers/
 │   ├── repositories/
 │   ├── routes/
 │   ├── services/
 │   └── app.js
-│
 ├── .env
 ├── .gitignore
 ├── package.json
@@ -98,97 +72,85 @@ hotel-backend/
 
 ---
 
-# 👥 Divisão da Equipe
+## ▶️ Como rodar o projeto
 
-### Vitorio → Banco
-- revisar schema.prisma
-
-### João Henrique → Hóspede + Quarto
-- CRUD completo
-
-### Leonardo → Reserva
-- CRUD completo
-- regra de disponibilidade
-
-### Josiel → Pagamento
-- CRUD completo
-
-### Isaac → Integração
-- testes
-- integração
-- apresentação
-
----
-
-# ▶ Como começar
-
-### 1 Clonar projeto
+### 1. Clonar o repositório
 ```bash
-git clone LINK_REPOSITORIO
-```
-
-### 2 Entrar na pasta
-```bash
+git clone https://github.com/isaacgbr/hotel-backend.git
 cd hotel-backend
 ```
 
-### 3 Instalar dependências
+### 2. Instalar dependências
 ```bash
 npm install
 ```
 
-### 4 Entrar na sua branch
-
-Banco:
-```bash
-git checkout feature/database
+### 3. Configurar o ambiente
+Crie um arquivo `.env` na raiz com:
+```env
+DATABASE_URL="file:./dev.db"
 ```
 
-Hóspede/Quarto:
+### 4. Rodar as migrations
 ```bash
-git checkout feature/hospede-quarto
+npx prisma migrate dev
 ```
 
-Reserva:
+### 5. Iniciar o servidor
 ```bash
-git checkout feature/reserva
+node src/app.js
 ```
 
-Pagamento:
-```bash
-git checkout feature/pagamento
-```
+O servidor sobe em `http://localhost:3000`
 
 ---
 
-### 5 Desenvolver sua parte
+## 📡 Endpoints
+
+### Hóspedes `/hospedes`
+| Método | Rota | Descrição |
+|---|---|---|
+| POST | `/hospedes` | Cadastrar hóspede |
+| GET | `/hospedes` | Listar todos |
+| GET | `/hospedes/:id` | Buscar por ID |
+| PUT | `/hospedes/:id` | Atualizar |
+| DELETE | `/hospedes/:id` | Deletar |
+
+### Quartos `/quartos`
+| Método | Rota | Descrição |
+|---|---|---|
+| POST | `/quartos` | Cadastrar quarto |
+| GET | `/quartos` | Listar todos |
+| GET | `/quartos/:id` | Buscar por ID |
+| PUT | `/quartos/:id` | Atualizar |
+| DELETE | `/quartos/:id` | Deletar |
+
+### Reservas `/reservas`
+| Método | Rota | Descrição |
+|---|---|---|
+| POST | `/reservas` | Criar reserva |
+| GET | `/reservas` | Listar todas |
+| GET | `/reservas/:id` | Buscar por ID |
+| PUT | `/reservas/:id` | Atualizar |
+| DELETE | `/reservas/:id` | Deletar |
 
 ---
 
-### 6 Enviar alterações
-```bash
-git add .
-git commit -m "minha parte finalizada"
-git push
-```
+## 👥 Equipe
+
+| Integrante | Responsabilidade | Status |
+|---|---|---|
+| Isaac | Integração, testes, organização | ✅ |
+| João Henrique | CRUD de Quarto | ✅ |
+| Leonardo | CRUD de Reserva | ✅ |
+| Vitório | Banco de dados / Schema | ✅ |
+| Josiel | CRUD de Pagamento | ⏳ |
 
 ---
 
-# 🤖 Prompt para usar em IA
+## 📌 Regras de negócio
 
-Copie e altere apenas sua função:
-
-```text
-Estou em um projeto backend de hotel usando Node.js, Express, Prisma e SQLite.
-
-Minha função é: [COLOQUE SUA FUNÇÃO]
-
-Preciso que você me ensine passo a passo como fazer minha parte dentro da estrutura:
-
-routes
-controllers
-services
-repositories
-
-Explique de forma simples para iniciante e me mostre quais arquivos criar.
-```
+- CPF de hóspede é único — não permite duplicatas
+- Número de quarto é único — não permite duplicatas
+- Reserva valida conflito de datas — o mesmo quarto não pode ter duas reservas no mesmo período
+- Status do quarto inicia como `disponivel` por padrão
