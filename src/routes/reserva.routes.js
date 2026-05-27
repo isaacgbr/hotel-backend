@@ -8,6 +8,9 @@ router.post('/', reservaController.criar);
 // READ ALL
 router.get('/', reservaController.listar);
 
+// READ ONE
+router.get('/:id', reservaController.buscar);
+
 // UPDATE
 router.put('/:id', reservaController.atualizar);
 

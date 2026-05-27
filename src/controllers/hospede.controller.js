@@ -5,7 +5,7 @@ const criar = async (req, res) => {
         const hospede = await service.criarHospede(req.body);
         res.status(201).json(hospede);
     } catch (error) {
-        res.status(500).json({ erro: "Erro ao criar hóspede" });
+        res.status(500).json({ erro: error.message });
     }
 };
 
@@ -14,7 +14,7 @@ const listar = async (req, res) => {
         const hospedes = await service.listarHospedes();
         res.json(hospedes);
     } catch (error) {
-        res.status(500).json({ erro: "Erro ao listar hóspedes" });
+        res.status(500).json({ erro: error.message });
     }
 };
 
@@ -29,7 +29,7 @@ const buscar = async (req, res) => {
 
         res.json(hospede);
     } catch (error) {
-        res.status(500).json({ erro: "Erro ao buscar hóspede" });
+        res.status(500).json({ erro: error.message });
     }
 };
 
@@ -44,14 +44,13 @@ const atualizar = async (req, res) => {
 
         res.json(hospede);
     } catch (error) {
-        res.status(500).json({ erro: "Erro ao atualizar hóspede" });
+        res.status(500).json({ erro: error.message });
     }
 };
 
 const deletar = async (req, res) => {
     try {
         const id = parseInt(req.params.id);
-
         const resultado = await service.deletarHospede(id);
 
         if (!resultado) {
@@ -60,7 +59,7 @@ const deletar = async (req, res) => {
 
         res.json({ mensagem: "Deletado com sucesso" });
     } catch (error) {
-        res.status(500).json({ erro: "Erro ao deletar hóspede" });
+        res.status(500).json({ erro: error.message });
     }
 };
 

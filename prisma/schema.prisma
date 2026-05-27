@@ -12,6 +12,7 @@ model Hospede {
   nome       String
   cpf        String     @unique
   telefone   String
+  email      String?
 
   reservas   Reserva[]
 }
