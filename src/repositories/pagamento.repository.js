@@ -1,4 +1,4 @@
-const prisma = require('../../prisma/client');
+const prisma = require('./prisma'); // Como estão na mesma pasta, basta o './prisma'
 
 // CREATE
 const criarPagamento = (data) => {

@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL") // Pode voltar a usar a URL aqui normalmente!
 }
 
 model Hospede {

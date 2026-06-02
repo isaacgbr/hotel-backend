@@ -1,4 +1,4 @@
-const prisma = require('../../prisma/client');
+const prisma = require('./prisma');
 
 const quartoRepository = {
   async criar(dados) {
@@ -14,10 +14,10 @@ const quartoRepository = {
   },
 
   async buscarPorNumero(numero) {
-  return await prisma.quarto.findFirst({
-    where: { numero: String(numero) }
-  });
-},
+    return await prisma.quarto.findFirst({
+      where: { numero: String(numero) }
+    });
+  },
 
   async atualizar(id, dados) {
     return await prisma.quarto.update({ where: { id }, data: dados });
