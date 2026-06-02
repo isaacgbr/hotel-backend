@@ -1,4 +1,4 @@
-const prisma = require('../../prisma/client');
+const prisma = require('./cliente');
 
 const create = (data) => prisma.pagamento.create({ data });
 

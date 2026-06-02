@@ -8,49 +8,40 @@ datasource db {
 }
 
 model Hospede {
-  id         Int        @id @default(autoincrement())
-  nome       String
-  cpf        String
-  telefone   String
-
-  reservas   Reserva[]
+  id       Int       @id @default(autoincrement())
+  nome     String
+  cpf      String    @unique // CORREÇÃO: Garante CPF único
+  telefone String
+  reservas Reserva[]
 }
 
 model Quarto {
-  id         Int        @id @default(autoincrement())
-  numero     String
-  tipo        String
-  status      String
+  id       Int       @id @default(autoincrement())
+  numero   String    @unique // CORREÇÃO: Garante número de quarto único
+  tipo     String
+  status   String    @default("disponivel") // CORREÇÃO: Status padrão ativo
 
-  reservas    Reserva[]
+  reservas Reserva[]
 }
 
 model Reserva {
-  id          Int       @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   dataEntrada DateTime
   dataSaida   DateTime
 
-  hospedeId   Int
-  quartoId    Int
+  hospedeId Int
+  quartoId  Int
 
-  hospede     Hospede   @relation(fields: [hospedeId], references: [id])
-  quarto      Quarto    @relation(fields: [quartoId], references: [id])
-
-  pagamentos  Pagamento[]
+  hospede    Hospede     @relation(fields: [hospedeId], references: [id])
+  quarto     Quarto      @relation(fields: [quartoId], references: [id])
+  pagamentos Pagamento[]
 }
 
 model Pagamento {
-  id               Int       @id @default(autoincrement())
-  valor             Float
-  
-  statusPagamento   String
+  id              Int    @id @default(autoincrement())
+  valor           Float
+  statusPagamento String
 
-  reservaId         Int
-  reserva           Reserva @relation(fields: [reservaId], references: [id])
-
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient({
-  log: process.env.NODE_ENV === "development" ? ["query", "warn", "error"] : ["error"],
-});
-module.exports = prisma;
-}
+  reservaId Int
+  reserva   Reserva @relation(fields: [reservaId], references: [id])
+} 
