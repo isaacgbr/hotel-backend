@@ -1,156 +1,255 @@
-# 🏨 Sistema de Hotel — Backend
+🏨 Sistema de Hotel — Backend
 
-> Projeto acadêmico de API REST para gerenciamento de hotel.
-> Node.js + Express + Prisma + SQLite
+API REST para gerenciamento de hotel desenvolvida como projeto acadêmico utilizando Node.js, Express, Prisma ORM e SQLite.
 
----
+⸻
 
-## 🚀 Tecnologias
+🎯 Objetivo
 
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
-![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
-![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+O sistema foi desenvolvido para gerenciar as principais operações de um hotel através de uma API REST, permitindo o controle de:
 
----
+* Hóspedes
+* Quartos
+* Reservas
+* Pagamentos
 
-## 🎯 Objetivo
+⸻
 
-API backend para controlar:
-- Hóspedes
-- Quartos
-- Reservas
-- Pagamentos
+🚀 Tecnologias Utilizadas
 
----
+⸻
 
-## ✅ Status do Projeto
+🏗️ Arquitetura
 
-| Módulo | Status |
-|---|---|
-| CRUD de Hóspedes | ✅ Concluído |
-| CRUD de Quartos | ✅ Concluído |
-| CRUD de Reservas | ✅ Concluído |
-| CRUD de Pagamentos | ⏳ Em andamento |
-| Testes gerais | ⏳ Em andamento |
-| Apresentação | ⏳ Pendente |
+O projeto segue arquitetura em camadas para garantir organização, manutenção e separação de responsabilidades.
 
----
+Routes
+↓
+Controllers
+↓
+Services
+↓
+Repositories
+↓
+Prisma
+↓
+Banco de Dados
 
-## 📅 Histórico
+Responsabilidades
 
-| Data | Evento |
-|---|---|
-| 11/05/2026 | Estrutura inicial, banco e Prisma configurados |
-| 13/05/2026 | Estrutura src criada, app.js, diagrama adicionado |
-| 27/05/2026 | CRUD de Hóspede, Quarto e Reserva concluídos e testados |
+Camada	Função
+Routes	Define os endpoints da API
+Controllers	Recebe requisições e retorna respostas HTTP
+Services	Contém as regras de negócio
+Repositories	Realiza acesso aos dados
+Prisma	ORM responsável pela comunicação com o banco
+Banco	Persistência dos dados
 
----
+⸻
 
-## 🧱 Estrutura do Projeto
+🗄️ Banco de Dados
 
-```bash
+O banco utiliza SQLite com Prisma ORM.
+
+Principais entidades:
+
+* Hospede
+* Quarto
+* Reserva
+* Pagamento
+
+Relacionamentos:
+
+Hospede 1:N Reserva
+Quarto 1:N Reserva
+Reserva 1:N Pagamento
+
+Para visualizar a modelagem completa consulte:
+
+DOCS/DIAGRAMA_BANCO.md
+
+⸻
+
+⚙️ Funcionalidades
+
+Hóspedes
+
+* Cadastro
+* Listagem
+* Busca por ID
+* Atualização
+* Exclusão
+
+Quartos
+
+* Cadastro
+* Listagem
+* Busca por ID
+* Atualização
+* Exclusão
+
+Reservas
+
+* Cadastro
+* Listagem
+* Busca por ID
+* Atualização
+* Exclusão
+* Verificação de conflito de datas
+
+Pagamentos
+
+* Cadastro
+* Listagem
+* Busca por ID
+* Atualização
+* Exclusão
+
+⸻
+
+📁 Estrutura do Projeto
+
 hotel-backend/
-├── docs/
-│   └── diagrama-hotel.drawio.png
+├── DOCS/
+│   ├── DIAGRAMA_BANCO.md
+│   └── README_AUDITORIA.md
+│
 ├── prisma/
 │   ├── migrations/
 │   ├── dev.db
 │   └── schema.prisma
+│
 ├── src/
 │   ├── controllers/
 │   ├── repositories/
 │   ├── routes/
 │   ├── services/
 │   └── app.js
+│
 ├── .env
 ├── .gitignore
 ├── package.json
 └── README.md
-```
 
----
+⸻
 
-## ▶️ Como rodar o projeto
+▶️ Como Executar o Projeto
 
-### 1. Clonar o repositório
-```bash
+1. Clonar o repositório
+
 git clone https://github.com/isaacgbr/hotel-backend.git
 cd hotel-backend
-```
 
-### 2. Instalar dependências
-```bash
+2. Instalar dependências
+
 npm install
-```
 
-### 3. Configurar o ambiente
-Crie um arquivo `.env` na raiz com:
-```env
+3. Configurar o ambiente
+
+Criar um arquivo .env na raiz:
+
 DATABASE_URL="file:./dev.db"
-```
 
-### 4. Rodar as migrations
-```bash
+4. Executar as migrations
+
 npx prisma migrate dev
-```
 
-### 5. Iniciar o servidor
-```bash
+5. Iniciar o servidor
+
 node src/app.js
-```
 
-O servidor sobe em `http://localhost:3000`
+Servidor disponível em:
 
----
+http://localhost:3000
 
-## 📡 Endpoints
+⸻
 
-### Hóspedes `/hospedes`
-| Método | Rota | Descrição |
-|---|---|---|
-| POST | `/hospedes` | Cadastrar hóspede |
-| GET | `/hospedes` | Listar todos |
-| GET | `/hospedes/:id` | Buscar por ID |
-| PUT | `/hospedes/:id` | Atualizar |
-| DELETE | `/hospedes/:id` | Deletar |
+📡 Endpoints
 
-### Quartos `/quartos`
-| Método | Rota | Descrição |
-|---|---|---|
-| POST | `/quartos` | Cadastrar quarto |
-| GET | `/quartos` | Listar todos |
-| GET | `/quartos/:id` | Buscar por ID |
-| PUT | `/quartos/:id` | Atualizar |
-| DELETE | `/quartos/:id` | Deletar |
+Hóspedes
 
-### Reservas `/reservas`
-| Método | Rota | Descrição |
-|---|---|---|
-| POST | `/reservas` | Criar reserva |
-| GET | `/reservas` | Listar todas |
-| GET | `/reservas/:id` | Buscar por ID |
-| PUT | `/reservas/:id` | Atualizar |
-| DELETE | `/reservas/:id` | Deletar |
+Método	Endpoint
+POST	/hospedes
+GET	/hospedes
+GET	/hospedes/:id
+PUT	/hospedes/:id
+DELETE	/hospedes/:id
 
----
+⸻
 
-## 👥 Equipe
+Quartos
 
-| Integrante | Responsabilidade | Status |
-|---|---|---|
-| Isaac | Integração, testes, organização | ✅ |
-| João Henrique | CRUD de Quarto | ✅ |
-| Leonardo | CRUD de Reserva | ✅ |
-| Vitório | Banco de dados / Schema | ✅ |
-| Josiel | CRUD de Pagamento | ⏳ |
+Método	Endpoint
+POST	/quartos
+GET	/quartos
+GET	/quartos/:id
+PUT	/quartos/:id
+DELETE	/quartos/:id
 
----
+⸻
 
-## 📌 Regras de negócio
+Reservas
 
-- CPF de hóspede é único — não permite duplicatas
-- Número de quarto é único — não permite duplicatas
-- Reserva valida conflito de datas — o mesmo quarto não pode ter duas reservas no mesmo período
-- Status do quarto inicia como `disponivel` por padrão
+Método	Endpoint
+POST	/reservas
+GET	/reservas
+GET	/reservas/:id
+PUT	/reservas/:id
+DELETE	/reservas/:id
+
+⸻
+
+Pagamentos
+
+Método	Endpoint
+POST	/pagamentos
+GET	/pagamentos
+GET	/pagamentos/:id
+PUT	/pagamentos/:id
+DELETE	/pagamentos/:id
+
+⸻
+
+📋 Regras de Negócio
+
+* CPF do hóspede deve ser único.
+* Número do quarto deve ser único.
+* Reservas não podem possuir conflito de datas para o mesmo quarto.
+* O status inicial do quarto é definido como disponivel.
+* Pagamentos são vinculados a reservas existentes.
+
+⸻
+
+📚 Documentação
+
+Documentos complementares disponíveis na pasta:
+
+DOCS/
+
+Documento	Descrição
+DIAGRAMA_BANCO.md	Estrutura e relacionamentos do banco
+README_AUDITORIA.md	Auditoria técnica e revisão do projeto
+
+⸻
+
+👥 Equipe
+
+Integrante	Responsabilidade
+Isaac	Integração dos módulos, documentação e organização do projeto
+João Henrique	Desenvolvimento do módulo Quarto
+Leonardo	Desenvolvimento do módulo Reserva
+Vitório	Banco de dados, Prisma ORM e modelagem
+Josiel	Desenvolvimento do módulo Pagamento
+
+⸻
+
+🎓 Projeto Acadêmico
+
+Projeto desenvolvido para fins educacionais com foco em:
+
+* API REST
+* Arquitetura em Camadas
+* Banco de Dados Relacional
+* Prisma ORM
+* Boas Práticas de Desenvolvimento Backend
+* Organização e Separação de Responsabilida
