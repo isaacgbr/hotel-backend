@@ -21,8 +21,12 @@ const quartoController = {
 
   async buscar(req, res) {
     try {
-      const quarto = await quartoService.buscarQuartoPorId(Number(req.params.id));
+      const quarto = await quartoService.buscarQuartoPorId(
+        Number(req.params.id)
+      );
+
       return res.json(quarto);
+
     } catch (error) {
       return res.status(404).json({ erro: error.message });
     }
@@ -30,9 +34,19 @@ const quartoController = {
 
   async atualizar(req, res) {
     try {
-      const quarto = await quartoService.atualizarQuarto(Number(req.params.id), req.body);
+      const quarto = await quartoService.atualizarQuarto(
+        Number(req.params.id),
+        req.body
+      );
+
       return res.json(quarto);
+
     } catch (error) {
+
+      if (error.message === 'Quarto não encontrado.') {
+        return res.status(404).json({ erro: error.message });
+      }
+
       return res.status(400).json({ erro: error.message });
     }
   },
@@ -41,6 +55,7 @@ const quartoController = {
     try {
       await quartoService.deletarQuarto(Number(req.params.id));
       return res.status(204).send();
+
     } catch (error) {
       return res.status(404).json({ erro: error.message });
     }
