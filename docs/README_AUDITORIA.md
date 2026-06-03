@@ -146,17 +146,4 @@ Na camada Repository.
 
 # Avaliação Geral
 
-| Critério            | Nota |
-| ------------------- | ---- |
-| Arquitetura         | 9.0  |
-| Banco de Dados      | 8.5  |
-| Organização         | 9.0  |
-| Prisma              | 9.0  |
-| Tratamento de Erros | 8.5  |
-| Validações          | 8.0  |
-
-## Nota Final
-
-**9.0 / 10**
-
 O projeto encontra-se funcional, documentado, testado e apto para apresentação acadêmica.
