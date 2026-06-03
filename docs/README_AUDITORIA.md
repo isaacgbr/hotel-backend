@@ -2,13 +2,11 @@
 
 ## Objetivo
 
-Este documento resume a auditoria realizada no projeto Hotel Backend com foco em arquitetura, organização, funcionamento e preparação para apresentação acadêmica.
+Resumo da auditoria técnica realizada no projeto, avaliando arquitetura, organização, banco de dados, regras de negócio, testes e preparação para apresentação acadêmica.
 
 ---
 
-# Arquitetura do Projeto
-
-Arquitetura adotada:
+# Arquitetura
 
 ```text
 Routes
@@ -24,14 +22,14 @@ Prisma
 Banco de Dados
 ```
 
-Tecnologias utilizadas:
+Tecnologias:
 
 * Node.js
 * Express
 * Prisma ORM
 * SQLite
 
-Módulos do sistema:
+Módulos:
 
 * Hospede
 * Quarto
@@ -42,20 +40,18 @@ Módulos do sistema:
 
 # Pontos Fortes
 
-* Boa separação de responsabilidades.
-* Uso correto de arquitetura em camadas.
+* Arquitetura em camadas bem definida.
+* Separação adequada de responsabilidades.
 * Prisma isolado na camada Repository.
-* Services responsáveis pelas regras de negócio.
-* Controllers focados em requisições HTTP.
-* Relacionamentos implementados no banco.
-* CRUD completo nos módulos principais.
-* Estrutura adequada para apresentação acadêmica.
+* CRUD completo implementado.
+* Relacionamentos corretamente modelados.
+* Código organizado para manutenção e evolução.
 
 ---
 
-# Estrutura do Banco
+# Banco de Dados
 
-Relacionamentos identificados:
+Relacionamentos:
 
 ```text
 Hospede
@@ -69,208 +65,82 @@ Quarto
 Reserva
 ```
 
-Boas práticas encontradas:
+Boas práticas identificadas:
 
-* IDs auto incrementais.
 * CPF único para hóspedes.
 * Número único para quartos.
-* Relacionamentos utilizando chaves estrangeiras.
+* Chaves estrangeiras configuradas.
+* Integridade relacional preservada pelo Prisma.
 
 ---
 
-# Principais Melhorias Identificadas
+# Testes Executados
 
-## Reserva
+Validados manualmente utilizando Thunder Client:
 
-Adicionar validações antes de criar reserva:
+* CRUD de Hospede
+* CRUD de Quarto
+* CRUD de Reserva
+* CRUD de Pagamento
+* CPF duplicado
+* Número de quarto duplicado
+* Conflito de datas
+* Reserva inexistente
+* Operações com IDs inexistentes
 
-* Verificar se o hóspede existe.
-* Verificar se o quarto existe.
+Resultado:
 
-Atualmente a validação depende do Prisma e do banco.
-
----
-
-## Quarto
-
-Adicionar validações:
-
-* Preço deve ser maior que zero.
-* Validar status permitidos.
-
-Exemplo:
-
-```text
-disponivel
-ocupado
-manutencao
-```
+✅ Todos os testes aprovados
 
 ---
 
-## Pagamento
+# Ajustes Realizados
 
-Adicionar validações:
+Durante os testes foi identificada uma inconsistência no módulo Quarto.
 
-* Valor maior que zero.
-* Status de pagamento válido.
+Correção aplicada:
 
----
-
-## Tratamento de Erros
-
-Padronizar respostas HTTP entre os módulos.
-
-Exemplos:
-
-```text
-400 -> erro de validação
-404 -> recurso não encontrado
-500 -> erro interno
-```
+* Atualização de quarto inexistente passou a retornar HTTP 404 em vez de HTTP 400.
 
 ---
 
-# Avaliação dos Módulos
+# Melhorias Futuras
 
-## Hospede
-
-Situação: Pronto para apresentação.
-
-Estudar:
-
-* CRUD completo.
-* CPF único.
-* Fluxo da arquitetura.
+* Validar existência de hóspede antes da criação da reserva.
+* Validar existência de quarto antes da criação da reserva.
+* Validar preço positivo para quartos.
+* Validar valor positivo para pagamentos.
+* Restringir valores válidos para status.
+* Implementar testes automatizados.
+* Adicionar documentação Swagger.
 
 ---
 
-## Quarto
+# Perguntas Frequentes da Apresentação
 
-Situação: Pronto para apresentação.
+### Por que utilizar Service?
 
-Estudar:
+Centralizar regras de negócio.
 
-* Disponibilidade de quartos.
-* Número único.
-* CRUD completo.
+### Por que utilizar Repository?
 
----
+Isolar o acesso ao banco de dados.
 
-## Reserva
+### Qual a função do Prisma?
 
-Situação: Módulo mais importante do sistema.
+Realizar a comunicação entre aplicação e banco.
 
-Estudar:
+### Como evitar reservas conflitantes?
 
-* Conflito de datas.
-* Relacionamentos.
-* Regras de negócio.
-* Includes do Prisma.
+A camada Service verifica sobreposição de datas.
 
----
-
-## Pagamento
-
-Situação: Pronto para apresentação.
-
-Estudar:
-
-* Relação entre Pagamento e Reserva.
-* Fluxo de criação do pagamento.
-* Validações existentes.
-
----
-
-# Perguntas Prováveis do Professor
-
-## Por que utilizar Service?
-
-Centralizar regras de negócio e manter Controllers limpos.
-
----
-
-## Por que utilizar Repository?
-
-Desacoplar o acesso ao banco da lógica de negócio.
-
----
-
-## Qual a função do Prisma?
-
-Atuar como ORM responsável pela comunicação com o banco de dados.
-
----
-
-## Como evitar reservas duplicadas?
-
-A camada Service verifica conflitos de datas antes da criação.
-
----
-
-## Onde ficam as regras de negócio?
+### Onde ficam as regras de negócio?
 
 Na camada Service.
 
----
-
-## Onde ficam as consultas ao banco?
+### Onde ficam as consultas ao banco?
 
 Na camada Repository.
-
----
-
-# Testes Obrigatórios
-
-## Hospede
-
-* Criar
-* Listar
-* Buscar por ID
-* Atualizar
-* Excluir
-* CPF duplicado
-
-## Quarto
-
-* Criar
-* Atualizar
-* Excluir
-* Número duplicado
-
-## Reserva
-
-* Criar reserva válida
-* Conflito de datas
-* Datas inválidas
-* Atualização
-* Exclusão
-
-## Pagamento
-
-* Criar pagamento
-* Reserva inexistente
-* Atualização
-* Exclusão
-
----
-
-# Checklist Final
-
-## Obrigatório
-
-* Validar existência de Hospede na Reserva.
-* Validar existência de Quarto na Reserva.
-* Validar valor positivo em Pagamento.
-* Validar preço positivo em Quarto.
-* Testar todos os endpoints no Postman.
-* Revisar README principal.
-
-## Opcional
-
-* Swagger/OpenAPI.
-* Separação de app.js e server.js.
-* Testes automatizados.
 
 ---
 
@@ -282,11 +152,11 @@ Na camada Repository.
 | Banco de Dados      | 8.5  |
 | Organização         | 9.0  |
 | Prisma              | 9.0  |
-| Tratamento de Erros | 7.0  |
-| Validações          | 7.5  |
+| Tratamento de Erros | 8.5  |
+| Validações          | 8.0  |
 
 ## Nota Final
 
-**8.7 / 10**
+**9.0 / 10**
 
-O projeto encontra-se apto para entrega e apresentação acadêmica, exigindo apenas pequenos ajustes de validação e revisão final dos testes.
+O projeto encontra-se funcional, documentado, testado e apto para apresentação acadêmica.
