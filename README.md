@@ -284,11 +284,10 @@ Atuei no desenvolvimento do módulo de quartos, integração dos módulos, organ
 
 ## 📚 Documentação complementar
 
-| Documento                  | Descrição                            |
-| -------------------------- | ------------------------------------ |
-| `docs/DIAGRAMA_BANCO.md`   | Estrutura e relacionamentos do banco |
-| `docs/README_AUDITORIA.md` | Auditoria técnica do projeto         |
-| `docs/TESTES.md`           | Relatório de testes executados       |
+| Documento | Descrição |
+|---|---|
+| `docs/DIAGRAMA_BANCO.md` | Estrutura e relacionamentos do banco |
+| `docs/TESTES.md` | Relatório de testes manuais |
 
 ---
 
